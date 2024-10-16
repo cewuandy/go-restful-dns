@@ -1,0 +1,39 @@
+# toolchain
+# IDE generated
+.idea/
+.vscode/
+*.iml
+
+# emacs/vim
+GPATH
+GRTAGS
+GTAGS
+TAGS
+tags
+cscope.*
+.swp
+.*.swp
+.*.*.swp
+
+# mac
+.DS_Store
+
+# debug
+testkeylog/
+log/
+*.log
+
+# binary
+bin/
+
+# environment
+configs/.env
+.env
+
+# ansible
+deployment/inventory.yaml
+
+# OpenAPI gen path
+openapi/
+
+*.db

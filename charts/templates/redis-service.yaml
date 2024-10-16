@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "charts.fullname" . }}-redis
+  labels:
+    {{- include "charts.redisLabels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+      targetPort: redis
+      protocol: TCP
+      name: redis
+  selector:
+    {{- include "charts.redisSelectorLabels" . | nindent 4 }}

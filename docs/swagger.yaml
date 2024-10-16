@@ -1,0 +1,367 @@
+basePath: /api/v1
+definitions:
+  dns.Question:
+    properties:
+      name:
+        description: '"cdomain-name" specifies encoding (and may be compressed)'
+        type: string
+      qclass:
+        type: integer
+      qtype:
+        type: integer
+    type: object
+  github_com_cewuandy_go-restful-dns_internal_domain.A:
+    properties:
+      a:
+        description: should be like "192.168.0.1"
+        type: string
+      hdr:
+        $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.RR_Header'
+    required:
+    - a
+    - hdr
+    type: object
+  github_com_cewuandy_go-restful-dns_internal_domain.Class:
+    enum:
+    - INET
+    - CSNET
+    - CHAOS
+    - HESIOD
+    - NONE
+    - ANY
+    type: string
+    x-enum-varnames:
+    - ClassINET
+    - ClassCSNET
+    - ClassCHAOS
+    - ClassHESIOD
+    - ClassNONE
+    - ClassANY
+  github_com_cewuandy_go-restful-dns_internal_domain.Error:
+    properties:
+      message:
+        type: string
+      statusCode:
+        type: integer
+    type: object
+  github_com_cewuandy_go-restful-dns_internal_domain.RR_Header:
+    properties:
+      class:
+        $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.Class'
+      name:
+        type: string
+      rdlength:
+        type: integer
+      rrtype:
+        $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.RRType'
+      ttl:
+        type: integer
+    required:
+    - class
+    - name
+    - rrtype
+    - ttl
+    type: object
+  github_com_cewuandy_go-restful-dns_internal_domain.RRType:
+    enum:
+    - None
+    - A
+    - NS
+    - MD
+    - MF
+    - CNAME
+    - SOA
+    - MB
+    - MG
+    - MR
+    - "NULL"
+    - PTR
+    - HINFO
+    - MINFO
+    - MX
+    - TXT
+    - RP
+    - AFSDB
+    - X25
+    - ISDN
+    - RT
+    - NSAPPTR
+    - SIG
+    - KEY
+    - PX
+    - GPOS
+    - AAAA
+    - LOC
+    - NXT
+    - EID
+    - NIMLOC
+    - SRV
+    - ATMA
+    - NAPTR
+    - KX
+    - CERT
+    - DNAME
+    - OPT
+    - APL
+    - DS
+    - SSHFP
+    - IPSECKEY
+    - RRSIG
+    - NSEC
+    - DNSKEY
+    - DHCID
+    - NSEC3
+    - NSEC3PARAM
+    - TLSA
+    - SMIMEA
+    - HIP
+    - NINFO
+    - RKEY
+    - TALINK
+    - CDS
+    - CDNSKEY
+    - OPENPGPKEY
+    - CSYNC
+    - ZONEMD
+    - SVCB
+    - HTTPS
+    - SPF
+    - UINFO
+    - UID
+    - GID
+    - UNSPEC
+    - NID
+    - L32
+    - L64
+    - LP
+    - EUI48
+    - EUI64
+    - NXNAME
+    - URI
+    - CAA
+    - AVC
+    - AMTRELAY
+    - TKEY
+    - TSIG
+    - IXFR
+    - AXFR
+    - MAILB
+    - MAILA
+    - ANY
+    - TA
+    - DLV
+    - Reserved
+    type: string
+    x-enum-varnames:
+    - TypeNone
+    - TypeA
+    - TypeNS
+    - TypeMD
+    - TypeMF
+    - TypeCNAME
+    - TypeSOA
+    - TypeMB
+    - TypeMG
+    - TypeMR
+    - TypeNULL
+    - TypePTR
+    - TypeHINFO
+    - TypeMINFO
+    - TypeMX
+    - TypeTXT
+    - TypeRP
+    - TypeAFSDB
+    - TypeX25
+    - TypeISDN
+    - TypeRT
+    - TypeNSAPPTR
+    - TypeSIG
+    - TypeKEY
+    - TypePX
+    - TypeGPOS
+    - TypeAAAA
+    - TypeLOC
+    - TypeNXT
+    - TypeEID
+    - TypeNIMLOC
+    - TypeSRV
+    - TypeATMA
+    - TypeNAPTR
+    - TypeKX
+    - TypeCERT
+    - TypeDNAME
+    - TypeOPT
+    - TypeAPL
+    - TypeDS
+    - TypeSSHFP
+    - TypeIPSECKEY
+    - TypeRRSIG
+    - TypeNSEC
+    - TypeDNSKEY
+    - TypeDHCID
+    - TypeNSEC3
+    - TypeNSEC3PARAM
+    - TypeTLSA
+    - TypeSMIMEA
+    - TypeHIP
+    - TypeNINFO
+    - TypeRKEY
+    - TypeTALINK
+    - TypeCDS
+    - TypeCDNSKEY
+    - TypeOPENPGPKEY
+    - TypeCSYNC
+    - TypeZONEMD
+    - TypeSVCB
+    - TypeHTTPS
+    - TypeSPF
+    - TypeUINFO
+    - TypeUID
+    - TypeGID
+    - TypeUNSPEC
+    - TypeNID
+    - TypeL32
+    - TypeL64
+    - TypeLP
+    - TypeEUI48
+    - TypeEUI64
+    - TypeNXNAME
+    - TypeURI
+    - TypeCAA
+    - TypeAVC
+    - TypeAMTRELAY
+    - TypeTKEY
+    - TypeTSIG
+    - TypeIXFR
+    - TypeAXFR
+    - TypeMAILB
+    - TypeMAILA
+    - TypeANY
+    - TypeTA
+    - TypeDLV
+    - TypeReserved
+host: localhost:8081
+info:
+  contact: {}
+  description: Documentation of go-restful-dns API
+  title: go-restful-dns API
+  version: "1.0"
+paths:
+  /record:
+    delete:
+      consumes:
+      - application/json
+      description: Delete dns record by name, qtype, qclass
+      parameters:
+      - description: The example of Question request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dns.Question'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.A'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.Error'
+      tags:
+      - Record
+    get:
+      consumes:
+      - application/json
+      description: Get dns record by name, qtype, qclass
+      parameters:
+      - description: Domain Name
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: Record Type
+        in: query
+        name: qtype
+        required: true
+        type: string
+      - description: Record Class
+        in: query
+        name: qclass
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.A'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.Error'
+      tags:
+      - Record
+  /record/{recordType}:
+    post:
+      consumes:
+      - application/json
+      description: Create a new dns record
+      parameters:
+      - description: The example of A record request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.A'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.A'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.Error'
+      tags:
+      - Record
+    put:
+      consumes:
+      - application/json
+      description: Update an existed dns record
+      parameters:
+      - description: The example of A record request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.A'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.A'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.Error'
+      tags:
+      - Record
+  /records:
+    get:
+      consumes:
+      - application/json
+      description: List all dns record
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.A'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_cewuandy_go-restful-dns_internal_domain.Error'
+      tags:
+      - Record
+swagger: "2.0"
