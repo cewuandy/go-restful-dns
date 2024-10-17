@@ -70,7 +70,6 @@ func (r *recordUseCase) CreateRecord(ctx context.Context, rr dns.RR) error {
 	}
 
 	return r.createFakeAAAA(ctx, header)
-
 }
 
 func (r *recordUseCase) GetRecord(ctx context.Context, question domain.Question) (dns.RR, error) {
@@ -217,13 +216,16 @@ func (r *recordUseCase) getFakeSOA(ctx context.Context, q dns.Question) (*dns.SO
 
 func (r *recordUseCase) isNsExisted(ctx context.Context, key string) bool {
 	rrMap, _ := r.redisRepo.HGetAll(ctx, key)
+	if len(rrMap) == 0 {
+		return false
+	}
 	for k := range rrMap {
-		if strings.Contains(k, string(domain.Ns)) {
-			return true
+		if strings.Contains(k, string(domain.Answer)) {
+			return false
 		}
 	}
 
-	return false
+	return true
 }
 
 func NewRecordUseCase(injector *do.Injector) (domain.RecordUseCase, error) {

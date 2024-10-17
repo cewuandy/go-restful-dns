@@ -16,6 +16,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/cewuandy/go-restful-dns/internal/domain"
 	pkgDo "github.com/cewuandy/go-restful-dns/pkg/do"
 )
 
@@ -26,6 +27,11 @@ func main() {
 	pkgDo.ProvideRepository(injector)
 	pkgDo.ProvideUseCase(injector)
 	pkgDo.ProvideController(injector)
+
+	err := do.MustInvoke[domain.InitHandler](injector).Initialize(context.Background())
+	if err != nil {
+		panic(err)
+	}
 
 	dnsServer := do.MustInvoke[*dns.Server](injector)
 	httpServer := do.MustInvoke[*http.Server](injector)

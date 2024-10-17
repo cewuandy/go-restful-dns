@@ -7,6 +7,8 @@ import (
 )
 
 func ProvideUseCase(injector *do.Injector) {
+	do.Provide(injector, usecase.NewInitUseCase)
+
 	do.Provide(injector, usecase.NewDNSUseCase)
 
 	do.Provide(injector, usecase.NewRecordUseCase)
