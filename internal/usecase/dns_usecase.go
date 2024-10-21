@@ -80,9 +80,6 @@ func (d *dnsUseCase) cacheRecord(ctx context.Context, resp *dns.Msg) error {
 	q := domain.Question{Question: resp.Question[0]}
 	for _, t := range domain.ResponseTypeMap {
 		value := reflect.ValueOf(*resp).FieldByName(string(t)).Interface()
-		if value == nil {
-			continue
-		}
 		rr := value.([]dns.RR)
 		for i, rl := range rr {
 			field := fmt.Sprintf("%s-%d", t, i)

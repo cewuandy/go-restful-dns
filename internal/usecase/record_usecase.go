@@ -55,7 +55,7 @@ func (r *recordUseCase) CreateRecord(ctx context.Context, rr dns.RR) error {
 		Record: rr.String(),
 	}
 
-	err = r.recordRepo.Create(ctx, *record)
+	err = r.recordRepo.Create(ctx, record)
 	if err != nil {
 		return err
 	}

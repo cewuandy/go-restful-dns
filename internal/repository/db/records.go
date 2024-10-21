@@ -18,7 +18,7 @@ type recordRepo struct {
 	db *gorm.DB
 }
 
-func (r *recordRepo) Create(ctx context.Context, record domain.Record) error {
+func (r *recordRepo) Create(ctx context.Context, record *domain.Record) error {
 	var (
 		raw models.Record
 		err error

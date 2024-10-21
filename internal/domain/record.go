@@ -49,7 +49,7 @@ type RecordUseCase interface {
 }
 
 type RecordRepo interface {
-	Create(ctx context.Context, record Record) error
+	Create(ctx context.Context, record *Record) error
 
 	Get(ctx context.Context, name string, rrType uint16, class uint16) (*Record, error)
 

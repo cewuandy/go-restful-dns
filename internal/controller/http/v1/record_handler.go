@@ -146,6 +146,11 @@ func (r *recordHandler) UpdateRecordAPI(ctx *gin.Context) {
 	record := reflect.New(v).Interface()
 	err := ctx.ShouldBindJSON(&record)
 	if err != nil {
+		err = &domain.Error{
+			Message:    fmt.Sprintf("Bind JSON error: %s", err.Error()),
+			Err:        errors.New(err.Error()),
+			StatusCode: http.StatusBadRequest,
+		}
 		_ = ctx.Error(err)
 		return
 	}
@@ -174,6 +179,11 @@ func (r *recordHandler) DeleteRecordAPI(ctx *gin.Context) {
 
 	err := ctx.ShouldBindJSON(&question)
 	if err != nil {
+		err = &domain.Error{
+			Message:    fmt.Sprintf("Bind JSON error: %s", err.Error()),
+			Err:        errors.New(err.Error()),
+			StatusCode: http.StatusBadRequest,
+		}
 		_ = ctx.Error(err)
 		return
 	}
