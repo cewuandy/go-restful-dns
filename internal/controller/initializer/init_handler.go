@@ -12,6 +12,10 @@ type initHandler struct {
 }
 
 func (i *initHandler) Initialize(ctx context.Context) error {
+	err := i.initUseCase.ClearRedisData(ctx)
+	if err != nil {
+		return err
+	}
 	return i.initUseCase.RecoverRecords(ctx)
 }
 

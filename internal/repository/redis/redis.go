@@ -83,6 +83,10 @@ func (r *redisRepository) HDel(ctx context.Context, key string) error {
 	return nil
 }
 
+func (r *redisRepository) FlushAll(ctx context.Context) error {
+	return r.client.FlushAll(ctx).Err()
+}
+
 // NewRedisRepo init redisRepository
 func NewRedisRepo(injector *do.Injector) (domain.RedisRepo, error) {
 	return &redisRepository{do.MustInvoke[*redis.Client](injector)}, nil

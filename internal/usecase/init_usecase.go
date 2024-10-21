@@ -14,6 +14,10 @@ type initUseCase struct {
 	recordRepo domain.RecordRepo
 }
 
+func (i *initUseCase) ClearRedisData(ctx context.Context) error {
+	return i.redisRepo.FlushAll(ctx)
+}
+
 func (i *initUseCase) RecoverRecords(ctx context.Context) error {
 	records, err := i.recordRepo.List(ctx)
 	if err != nil {

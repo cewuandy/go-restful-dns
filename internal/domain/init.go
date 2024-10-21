@@ -7,5 +7,7 @@ type InitHandler interface {
 }
 
 type InitUseCase interface {
+	ClearRedisData(ctx context.Context) error
+
 	RecoverRecords(ctx context.Context) error
 }

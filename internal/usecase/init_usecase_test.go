@@ -63,6 +63,9 @@ func (t *initUseCaseTestSuite) SetupTest() {
 				},
 			}, nil,
 		)
+	t.redisRepo.
+		On("FlushAll", anyContext).
+		Return(nil)
 }
 
 func (t *initUseCaseTestSuite) SetupErrorTest() {
@@ -193,6 +196,15 @@ func (t *initUseCaseTestSuite) TestRecoverRecords() {
 			err := t.usecase.RecoverRecords(context.Background())
 			t.NotNil(err)
 			t.Equal("test-error", err.Error())
+		},
+	)
+}
+
+func (t *initUseCaseTestSuite) TestClearRedisData() {
+	t.Run(
+		"success", func() {
+			err := t.usecase.ClearRedisData(context.Background())
+			t.Nil(err)
 		},
 	)
 }

@@ -192,3 +192,18 @@ func (t *redisRepoTestSuite) TestHDel() {
 		},
 	)
 }
+
+func (t *redisRepoTestSuite) TestFlushAll() {
+	t.Run(
+		"success", func() {
+			redisClient, client := redismock.NewClientMock()
+			do.OverrideValue[*redis.Client](t.injector, redisClient)
+			repo, _ := NewRedisRepo(t.injector)
+			client.
+				ExpectFlushAll().
+				SetVal("")
+			err := repo.FlushAll(context.Background())
+			t.Nil(err)
+		},
+	)
+}
