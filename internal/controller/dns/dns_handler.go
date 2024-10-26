@@ -21,7 +21,7 @@ func (d *dnsHandler) ServeDNS(respWriter dns.ResponseWriter, req *dns.Msg) {
 	)
 
 	defer func() {
-		if resp == nil {
+		if resp == nil || respWriter == nil {
 			return
 		}
 		err = respWriter.WriteMsg(resp)
