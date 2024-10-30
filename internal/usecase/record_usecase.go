@@ -7,7 +7,9 @@ import (
 	"github.com/samber/do"
 	"gorm.io/gorm"
 	"net/http"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/cewuandy/go-restful-dns/internal/domain"
 	"github.com/cewuandy/go-restful-dns/internal/utils"
@@ -196,6 +198,9 @@ func (r *recordUseCase) getFakeSOA(ctx context.Context, q dns.Question) (*dns.SO
 	if err != nil {
 		return nil, err
 	}
+	now := time.Now()
+	dateString := now.Format("2006010215")
+	dateUint, _ := strconv.ParseUint(dateString, 10, 32)
 	for _, v := range rrMap {
 		rr, _ := dns.NewRR(v)
 		rr.Header().Rrtype = dns.TypeSOA
@@ -203,7 +208,7 @@ func (r *recordUseCase) getFakeSOA(ctx context.Context, q dns.Question) (*dns.SO
 			Hdr:     *rr.Header(),
 			Ns:      rr.Header().Name,
 			Mbox:    rr.Header().Name,
-			Serial:  0,
+			Serial:  uint32(dateUint),
 			Refresh: rr.Header().Ttl,
 			Retry:   300,
 			Expire:  rr.Header().Ttl,
