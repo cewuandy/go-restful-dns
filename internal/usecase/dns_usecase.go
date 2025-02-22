@@ -66,7 +66,7 @@ func (d *dnsUseCase) QueryUpstream(ctx context.Context, req *dns.Msg) (resp *dns
 		}
 	}
 
-	return nil, domain.Error{Message: "upstream forwarder error"}
+	return nil, domain.Error{Message: fmt.Sprintf("cannot get %s from upstream forwarder", req.Question[0].Name)}
 }
 
 func (d *dnsUseCase) initRespMsg(req *dns.Msg, resp *dns.Msg) *dns.Msg {
