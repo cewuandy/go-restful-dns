@@ -66,7 +66,7 @@ func (d *dnsUseCase) QueryUpstream(ctx context.Context, req *dns.Msg) (resp *dns
 		}
 	}
 
-	return nil, domain.Error{Message: "upstream forwarder error"}
+	return nil, domain.Error{Message: fmt.Sprintf("cannot get %s from upstream forwarder", req.Question[0].Name)}
 }
 
 func (d *dnsUseCase) initRespMsg(req *dns.Msg, resp *dns.Msg) *dns.Msg {
@@ -82,9 +82,13 @@ func (d *dnsUseCase) cacheRecord(ctx context.Context, resp *dns.Msg) error {
 		value := reflect.ValueOf(*resp).FieldByName(string(t)).Interface()
 		rr := value.([]dns.RR)
 		for i, rl := range rr {
+			r, err := dns.NewRR(rl.String())
+			if r == nil || err != nil {
+				continue
+			}
 			field := fmt.Sprintf("%s-%d", t, i)
 			ttl := time.Duration(rl.Header().Ttl) * time.Second
-			err := d.redisRepo.HSet(ctx, q.String(), field, rl.String(), ttl)
+			err = d.redisRepo.HSet(ctx, q.String(), field, rl.String(), ttl)
 			if err != nil {
 				return err
 			}
